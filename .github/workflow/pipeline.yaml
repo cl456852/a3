@@ -5,12 +5,13 @@ on:
 env:
 
 jobs:
-  check-secrets:
-    name: Checking for Secrets
+  Gitleaks:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Configuration
-        uses: actions/checkout@v3
-      - name: Secret Scanner
-        uses: secret-scanner/action@0.0.2
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
